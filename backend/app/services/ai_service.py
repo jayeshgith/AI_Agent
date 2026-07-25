@@ -47,7 +47,10 @@ def generate_recommendations(payload: RecommendationRequest):
     if not settings.GROQ_API_KEY:
         raise RuntimeError("GROQ_API_KEY is missing from the .env file")
 
-    client = Groq(api_key=settings.GROQ_API_KEY)
+    import httpx
+    # Disable SSL verification for local dev network environments
+    http_client = httpx.Client(verify=False)
+    client = Groq(api_key=settings.GROQ_API_KEY, http_client=http_client)
 
     completion = client.chat.completions.create(
         model=MODEL_NAME,
