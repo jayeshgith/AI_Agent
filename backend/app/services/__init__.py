@@ -1,1 +1,1 @@
-# services will hold business workflows later. No AI integration is included yet.
+# services contains reusable business logic, including isolated AI integrations.

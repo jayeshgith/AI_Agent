@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.db_status import router as db_status_router
 from app.api.health import router as health_router
+from app.api.recommendation import router as recommendation_router
 from app.config.settings import settings
 from app.database.connection import close_mongo_connection, connect_to_mongo
 
@@ -36,3 +37,4 @@ app.add_middleware(
 
 app.include_router(health_router)
 app.include_router(db_status_router)
+app.include_router(recommendation_router)

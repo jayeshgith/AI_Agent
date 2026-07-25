@@ -1,12 +1,6 @@
-import os
-from pathlib import Path
-
-from dotenv import load_dotenv
 from pymongo import MongoClient
 
-# Load backend/.env so MongoDB settings are available before startup connects.
-ENV_PATH = Path(__file__).resolve().parents[2] / ".env"
-load_dotenv(ENV_PATH)
+from app.config.settings import settings
 
 
 class MongoConnection:
@@ -22,8 +16,8 @@ mongo = MongoConnection()
 
 def connect_to_mongo():
     """Connect to MongoDB Atlas and keep the application alive on failure."""
-    mongodb_uri = os.getenv("MONGODB_URI")
-    database_name = os.getenv("DATABASE_NAME")
+    mongodb_uri = settings.MONGODB_URI
+    database_name = settings.DATABASE_NAME
 
     if not mongodb_uri or not database_name:
         mongo.client = None
