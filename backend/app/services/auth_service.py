@@ -1,8 +1,9 @@
 from datetime import datetime, timezone
 
 from app.database.mongodb import mongo
-from app.models.user import UserRegisterRequest
-from app.utils.password import hash_password
+from app.models.user import LoginResponse, UserLoginRequest, UserPublic, UserRegisterRequest
+from app.utils.jwt_handler import create_access_token
+from app.utils.password import hash_password, verify_password
 
 
 class AuthService:
@@ -30,3 +31,26 @@ class AuthService:
 
         mongo.database.users.insert_one(user_document)
         return {"message": "User registered successfully"}
+
+    @staticmethod
+    def login_user(payload: UserLoginRequest) -> LoginResponse:
+        """Validate credentials and return a signed JWT plus the user profile."""
+        if mongo.database is None:
+            raise RuntimeError("MongoDB is not available")
+
+        user = mongo.database.users.find_one({"email": str(payload.email).lower()})
+        if user is None:
+            raise ValueError("Invalid email or password")
+
+        if not verify_password(payload.password, user.get("password", "")):
+            raise ValueError("Invalid email or password")
+
+        token = create_access_token({"user_id": str(user["_id"]), "email": user["email"]})
+        return LoginResponse(
+            access_token=token,
+            user=UserPublic(
+                id=str(user["_id"]),
+                name=user.get("name", ""),
+                email=user.get("email", ""),
+            ),
+        )

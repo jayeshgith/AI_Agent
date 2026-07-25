@@ -17,6 +17,29 @@ class UserResponse(BaseModel):
     message: str
 
 
+class UserLoginRequest(BaseModel):
+    """Input model for the login endpoint."""
+
+    email: EmailStr
+    password: str
+
+
+class UserPublic(BaseModel):
+    """Safe user details returned to the client after login."""
+
+    id: str
+    name: str
+    email: str
+
+
+class LoginResponse(BaseModel):
+    """JWT response returned after a successful login."""
+
+    access_token: str
+    token_type: str = "bearer"
+    user: UserPublic
+
+
 class UserRecord(BaseModel):
     """Stored user model for MongoDB persistence."""
 
