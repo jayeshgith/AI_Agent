@@ -23,3 +23,19 @@ class RecommendationResponse(BaseModel):
     """Final JSON response shape returned by POST /recommend."""
 
     courses: list[CourseRecommendation]
+
+
+class Recommendation(BaseModel):
+    """Stored database record for a generated learning path."""
+
+    id: str | None = None
+    name: str = ""
+    background: str = ""
+    skills: list[str] = Field(default_factory=list)
+    goal: str = ""
+    courses: list[CourseRecommendation] = Field(default_factory=list)
+    created_at: str = ""
+
+
+# Keeping RecommendationRecord as an alias for backwards compatibility
+RecommendationRecord = Recommendation

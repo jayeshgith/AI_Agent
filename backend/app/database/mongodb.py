@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-
 from app.config.settings import settings
 
 
@@ -15,7 +14,7 @@ mongo = MongoConnection()
 
 
 def connect_to_mongo():
-    """Connect to MongoDB Atlas and keep the application alive on failure."""
+    """Connect to MongoDB Atlas using config settings, keeping app alive if it fails."""
     mongodb_uri = settings.MONGODB_URI
     database_name = settings.DATABASE_NAME
 
@@ -27,7 +26,9 @@ def connect_to_mongo():
         return
 
     try:
+        # Establish connection with 5 seconds timeout
         client = MongoClient(mongodb_uri, serverSelectionTimeoutMS=5000)
+        # Test connection with a ping command
         client.admin.command("ping")
 
         mongo.client = client
@@ -42,7 +43,7 @@ def connect_to_mongo():
 
 
 def close_mongo_connection():
-    """Close the MongoDB client when the FastAPI app shuts down."""
+    """Close the active MongoDB client when the application shuts down."""
     if mongo.client is not None:
         mongo.client.close()
 
@@ -52,7 +53,7 @@ def close_mongo_connection():
 
 
 def get_database_status():
-    """Return connected only when the stored client still responds to ping."""
+    """Return the database status by executing a ping request to check connection health."""
     if mongo.client is None:
         mongo.is_connected = False
         return "disconnected"

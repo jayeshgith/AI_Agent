@@ -3,6 +3,7 @@ import json
 from groq import Groq
 
 from app.config.settings import settings
+from app.services.recommendation_service import save_recommendation
 from app.models.recommendation import RecommendationRequest, RecommendationResponse
 
 MODEL_NAME = "llama-3.3-70b-versatile"
@@ -42,7 +43,7 @@ Rules:
 
 
 def generate_recommendations(payload: RecommendationRequest):
-    """Call Groq and return a validated JSON recommendation response."""
+    """Call Groq, validate the returned JSON, and persist the recommendation."""
     if not settings.GROQ_API_KEY:
         raise RuntimeError("GROQ_API_KEY is missing from the .env file")
 
@@ -68,4 +69,17 @@ def generate_recommendations(payload: RecommendationRequest):
     parsed_response = json.loads(content)
 
     # Validate the AI output before returning it from the API route.
-    return RecommendationResponse.model_validate(parsed_response).model_dump()
+    validated_response = RecommendationResponse.model_validate(parsed_response).model_dump()
+
+    # Save the user profile and generated course list as one recommendation record.
+    save_recommendation(
+        {
+            "name": payload.name,
+            "background": payload.background,
+            "skills": payload.skills,
+            "goal": payload.goal,
+            "courses": validated_response["courses"],
+        }
+    )
+
+    return validated_response

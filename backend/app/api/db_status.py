@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.database.connection import get_database_status
+from app.database.mongodb import get_database_status
 
 router = APIRouter()
 
