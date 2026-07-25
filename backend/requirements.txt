@@ -1,0 +1,5 @@
+# FastAPI application framework.
+fastapi
+
+# ASGI server used by `uvicorn main:app --reload`.
+uvicorn[standard]
