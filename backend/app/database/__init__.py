@@ -1,1 +1,1 @@
-# database will hold connection setup later. MongoDB is intentionally not connected yet.
+# database contains reusable MongoDB connection helpers and status utilities.
