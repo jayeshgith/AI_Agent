@@ -11,7 +11,6 @@ const initialFormState = {
   goal: "",
 };
 
-// Recommendation renders the learner form and displays AI-generated course cards.
 export default function Recommendation() {
   const [formData, setFormData] = useState(initialFormState);
   const [courses, setCourses] = useState([]);
@@ -29,7 +28,6 @@ export default function Recommendation() {
     setError("");
 
     try {
-      // Convert the comma-separated skills input into the array shape expected by the API.
       const payload = {
         ...formData,
         skills: formData.skills

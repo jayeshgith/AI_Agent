@@ -37,5 +37,4 @@ class Recommendation(BaseModel):
     created_at: str = ""
 
 
-# Keeping RecommendationRecord as an alias for backwards compatibility
 RecommendationRecord = Recommendation

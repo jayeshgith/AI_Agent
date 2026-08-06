@@ -1,7 +1,6 @@
 import { Outlet } from "react-router";
 import Navbar from "./components/Navbar.jsx";
 
-// App is the shared shell rendered around every page route.
 export default function App() {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.12),_transparent_40%)] bg-slate-50 text-slate-950">

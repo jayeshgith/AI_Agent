@@ -78,7 +78,6 @@ const steps = [
   },
 ];
 
-// Home gives the user a polished overview of the recommendation experience.
 export default function Home() {
   return (
     <section className="space-y-8">

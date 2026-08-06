@@ -48,7 +48,6 @@ def generate_recommendations(payload: RecommendationRequest):
         raise RuntimeError("GROQ_API_KEY is missing from the .env file")
 
     import httpx
-    # Disable SSL verification for local dev network environments
     http_client = httpx.Client(verify=False)
     client = Groq(api_key=settings.GROQ_API_KEY, http_client=http_client)
 
@@ -71,10 +70,8 @@ def generate_recommendations(payload: RecommendationRequest):
     content = completion.choices[0].message.content or "{}"
     parsed_response = json.loads(content)
 
-    # Validate the AI output before returning it from the API route.
     validated_response = RecommendationResponse.model_validate(parsed_response).model_dump()
 
-    # Save the user profile and generated course list as one recommendation record.
     save_recommendation(
         {
             "name": payload.name,

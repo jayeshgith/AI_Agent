@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Breadcrumbs from "../components/Breadcrumbs.jsx";
 import { getHistory, deleteHistory } from "../services/api.js";
 
-// Modal component to display recommendation details
 function RecommendationModal({ recommendation, onClose }) {
   if (!recommendation) return null;
 
@@ -139,7 +138,6 @@ function RecommendationModal({ recommendation, onClose }) {
   );
 }
 
-// History Page listing saved recommendations
 export default function History() {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

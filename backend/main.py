@@ -16,13 +16,11 @@ from app.database.mongodb import close_mongo_connection, connect_to_mongo
 
 @asynccontextmanager
 async def lifespan(app):
-    # Try to connect during startup, but keep the API alive if Atlas is unavailable.
     connect_to_mongo()
     yield
     close_mongo_connection()
 
 
-# main.py is the FastAPI entry point used by `uvicorn main:app --reload`.
 app = FastAPI(
     title=settings.APP_NAME,
     version="0.1.0",
@@ -30,7 +28,6 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS is currently limited to the Vite dev server.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,

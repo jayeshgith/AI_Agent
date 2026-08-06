@@ -24,7 +24,6 @@ export default function RecommendationCard({ course, index }) {
           <h3 className="text-lg font-semibold text-slate-950">{name}</h3>
         </div>
         <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-600">
-          #{index + 1}
         </span>
       </div>
 

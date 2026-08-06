@@ -9,7 +9,6 @@ import History from "./pages/History.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import "./styles.css";
 
-// Router configuration stays outside React rendering so route definitions are stable.
 const router = createBrowserRouter([
   {
     path: "/",

@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 
-// NotFound handles unmatched routes and gives users a path back home.
 export default function NotFound() {
   return (
     <section className="space-y-4">

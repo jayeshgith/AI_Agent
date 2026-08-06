@@ -26,9 +26,7 @@ def connect_to_mongo():
         return
 
     try:
-        # Establish connection with 5 seconds timeout
         client = MongoClient(mongodb_uri, serverSelectionTimeoutMS=5000)
-        # Test connection with a ping command
         client.admin.command("ping")
 
         mongo.client = client
